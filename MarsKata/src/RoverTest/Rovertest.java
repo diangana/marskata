@@ -38,14 +38,14 @@ public class Rovertest {
        for (int i = 0; i < mots.length; i++) {
            System.out.println(mots[i]);
        }
-   	assertNotEquals(rover.move(Integer.parseInt(mots[0]),Integer.parseInt(mots[1])), position);
+   	assertEquals(rover.move(), position);
    }
     @Test
     @DisplayName("display right.")
     @ParameterizedTest(name = "right")
     @ValueSource(strings = { "MMRMMRMRRM" })
     void rotate_right(String commands, String position) {
-    	assertNotEquals(rover.execute(commands), position);
+    	assertEquals(rover.execute(commands), position);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class Rovertest {
     @ParameterizedTest(name = "left")
     @ValueSource(strings = { "LMLMLMLMM" })
     void rotate_left(String commands, String position) {
-        assertNotEquals(rover.execute(commands), position);
+        assertEquals(rover.execute(commands), position);
     }
 
 
