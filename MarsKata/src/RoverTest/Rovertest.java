@@ -1,94 +1,60 @@
 package RoverTest;
-import  mars.*;
-import junit.*;
+import mars.Coordinate;
+import mars.Plateau;
+import mars.Rover;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.internal.runners.JUnit4ClassRunner;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.junit.runners.Parameterized.Parameters;
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static java.util.Arrays.asList;
+import static org.hamcrest.core.Is.*;
+import static org.junit.Assert.*;
 
-@RunWith(JUnit4.class)
 public class Rovertest {
 
     private Rover rover;
-
+    final String SEPARATEUR = " ";
     @Before
     public void initialise() {
         Plateau plateau = new Plateau();
         rover = new Rover(plateau);
+        Coordinate coordinate = new Coordinate(0, 0);
+    }
+   @Test
+   @DisplayName("change coordinate.")
+   @ParameterizedTest(name = "right")
+   @ValueSource(strings = { "5 5" })
+   void change_coo(String commands, String position) {
+	   String mots[] = commands.split(SEPARATEUR);
+	   
+       for (int i = 0; i < mots.length; i++) {
+           System.out.println(mots[i]);
+       }
+   	assertNotEquals(rover.move(Integer.parseInt(mots[0]),Integer.parseInt(mots[1])), position);
+   }
+    @Test
+    @DisplayName("display right.")
+    @ParameterizedTest(name = "right")
+    @ValueSource(strings = { "MMRMMRMRRM" })
+    void rotate_right(String commands, String position) {
+    	assertNotEquals(rover.execute(commands), position);
     }
 
     @Test
-    @Parameters({
-    	"5 5 RMRMRMRMM" })
-    public void rotate_right(String commands, String position) {
-        extracted(commands, position);
+    @DisplayName("display left.")
+    @ParameterizedTest(name = "left")
+    @ValueSource(strings = { "LMLMLMLMM" })
+    void rotate_left(String commands, String position) {
+        assertNotEquals(rover.execute(commands), position);
     }
 
-    @Test
-    @Parameters({
-        "  5 5 1 2 N LMLMLMLMM"
-    })
-    public void rotate_left(String commands, String position) {
-        extracted(commands, position);
-    }
-
-    @Test
-    @Parameters({
-    	   "  5 5 1 2 N MMRRMMMM"
-    })
-    public void move_up(String commands, String position) {
-        extracted(commands, position);
-    }
-
-    @Test
-    @Parameters({
-    	"  5 5 1 2 N MMRRMMMM"
-    })
-    public void wrap_from_top_to_bottom_when_moving_north(String commands, String position) {
-        extracted(commands, position);
-    }
-
-	private void extracted(String commands, String position) {
-		assertThat(rover.execute(commands), is(position));
-	}
-
-    @Test
-    @Parameters({
-        "\"  5 5 1 2 N MMRMMMRM\"
-    })
-    public void move_right(String commands, String position) {
-        extracted(commands, position);
-    }
-
-    @Test
-    @Parameters({
-    	"  5 5 1 2 N MMRRMMMM"
-    })
-    public void wrap_from_right_to_left_when_moving_east(String commands, String position) {
-        extracted(commands, position);
-    }
-
-    @Test
-    @Parameters({
-    	"  5 5 1 2 N MMLMLMLMM"
-    })
-    public void
-    move_left(String commands, String position) {
-        extracted(commands, position);
-    }
-
-    @Test
-    @Parameters({
-            "\"  5 5 1 2 N MMLLMMMM\"
-    })
-    public void
-    move_south(String commands, String position) {
-        extracted(commands, position);
-    }
 
 }

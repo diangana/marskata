@@ -22,10 +22,11 @@ public class Rover {
 	                obstacleString = move();
 	            }
 	        }
-	        return obstacleString + coordinate.x() + ":" + coordinate.y() + ":" + direction.value();
+	        return obstacleString + coordinate.x() + " " + coordinate.y() + " " + direction.value();
 	    }
-	    private String move() {
-	        Optional<Coordinate> nextCoordinate = plateau.Camera(this.coordinate, direction);
+	   public String move(int x,int y) {
+		   coordinate=new Coordinate(x, y);
+		   Optional<Coordinate> nextCoordinate = plateau.Camera(this.coordinate, direction);
 	        nextCoordinate.ifPresent(nc -> this.coordinate = nc);
 	        return nextCoordinate.isPresent() ? "" : "O:";
 	    }
